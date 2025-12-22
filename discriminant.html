@@ -3,37 +3,85 @@
 <head>
   <meta charset="UTF-8">
   <title>CM Discriminant</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- MathJax -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
-      max-width: 800px;
-      margin: auto;
-      padding: 20px;
+      background: #fdfefe;
+      margin: 40px;
+      color: #111;
     }
 
     h1 {
       text-align: center;
+      color: #003366;
+      margin-bottom: 30px;
+    }
+
+    .cm-block {
+      width: 80%;
+      margin: 30px auto;
+      padding: 20px;
+      border-radius: 8px;
+      background: #e6f0ff;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 25px;
+      margin-top: 10px;
     }
 
-    td, th {
-      border: 1px solid #ccc;
-      padding: 10px;
+    th, td {
+      padding: 12px;
+      border: 1px solid #bbb;
     }
 
     th {
-      background: #f5f5f5;
+      width: 35%;
+      background: #f2f6ff;
       text-align: left;
     }
 
+    .note {
+      margin-top: 10px;
+      font-style: italic;
+      color: #444;
+    }
+
     .back {
-      margin-top: 20px;
       text-align: center;
+      margin-top: 40px;
+    }
+
+    a {
+      color: #003b8e;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 700px) {
+      .cm-block {
+        width: 95%;
+      }
     }
   </style>
 </head>
@@ -42,50 +90,83 @@
 
 <h1 id="title">CM Discriminant</h1>
 
-<table>
-  <tr>
-    <th>CM Point τ</th>
-    <td id="tau"></td>
-  </tr>
-  <tr>
-    <th>j(τ)</th>
-    <td id="j"></td>
-  </tr>
-  <tr>
-    <th>η(τ)</th>
-    <td id="eta"></td>
-  </tr>
-  <tr>
-    <th>Class Number</th>
-    <td id="class"></td>
-  </tr>
-</table>
+<div id="cm-container"></div>
 
 <div class="back">
   <a href="index.html">← Back to Discriminants</a>
 </div>
 
 <script>
+  // Extract discriminant from URL
   const params = new URLSearchParams(window.location.search);
   const D = params.get("D");
 
   if (!D) {
-    alert("No discriminant specified.");
-  } else {
-    document.getElementById("title").innerText = "CM Discriminant D = " + D;
-
-    fetch(`data/D${D}.json`)
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById("tau").innerText = data.tau;
-        document.getElementById("j").innerText = data.j;
-        document.getElementById("eta").innerText = data.eta;
-        document.getElementById("class").innerText = data.class_number;
-      })
-      .catch(err => {
-        alert("Data file not found for D = " + D);
-      });
+    document.getElementById("title").textContent =
+      "No discriminant specified.";
+    throw new Error("Missing discriminant parameter.");
   }
+
+  document.getElementById("title").textContent =
+    `CM Discriminant D = ${D}`;
+
+  // Load corresponding JSON
+  fetch(`data/D${D}.json`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("JSON file not found.");
+      }
+      return response.json();
+    })
+    .then(data => {
+      const container = document.getElementById("cm-container");
+
+      // Class number (global)
+      const h = data.class_number;
+
+      data.cm_points.forEach((cm, idx) => {
+        const block = document.createElement("div");
+        block.className = "cm-block";
+
+        block.innerHTML = `
+          <h2>CM Point ${idx + 1}</h2>
+
+          <table>
+            <tr>
+              <th>CM Point $\\tau$</th>
+              <td>$$${cm.tau}$$</td>
+            </tr>
+            <tr>
+              <th>$j(\\tau)$</th>
+              <td>$$${cm.j_value.exact}$$</td>
+            </tr>
+            <tr>
+              <th>$\\eta(\\tau)$</th>
+              <td>$$${cm.eta_value.exact}$$</td>
+            </tr>
+            <tr>
+              <th>Class Number</th>
+              <td>${h}</td>
+            </tr>
+          </table>
+
+          ${cm.notes ? `<div class="note">${cm.notes}</div>` : ""}
+        `;
+
+        container.appendChild(block);
+      });
+
+      // Re-render MathJax
+      MathJax.typesetPromise();
+
+    })
+    .catch(error => {
+      document.getElementById("cm-container").innerHTML =
+        `<p style="color:red; text-align:center;">
+          Failed to load data for discriminant ${D}.
+        </p>`;
+      console.error(error);
+    });
 </script>
 
 </body>
