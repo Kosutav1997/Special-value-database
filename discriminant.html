@@ -1,5 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CM Discriminant</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- MathJax -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background: #fdfefe;
+    }
+
+    h1 {
+      text-align: center;
+      color: #003366;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin: 30px auto;
+      min-width: 60%;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px 14px;
+      text-align: center;
+    }
+
+    th {
+      background: #e6f0ff;
+    }
+
+    .cm-block {
+      margin-bottom: 40px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1 id="title"></h1>
+
+<div id="cm-container"></div>
+
 <script>
-  // Extract discriminant from URL
+  // Extract discriminant
   const params = new URLSearchParams(window.location.search);
   const D = params.get("D");
 
@@ -12,11 +71,10 @@
   document.getElementById("title").textContent =
     `CM Discriminant D = ${D}`;
 
-  // Load corresponding JSON
   fetch(`data/D${D}.json`)
     .then(response => {
       if (!response.ok) {
-        throw new Error("JSON file not found.");
+        throw new Error("JSON file not found");
       }
       return response.json();
     })
@@ -25,46 +83,45 @@
       const cmPoints = data.cm_points;
       const h = data.class_number;
 
-      const block = document.createElement("div");
-      block.className = "cm-block";
+      const table = document.createElement("table");
 
-      // Build table header
-      let headerRow = `<tr><th></th>`;
+      /* ---------- Header ---------- */
+      let header = "<tr><th></th>";
       cmPoints.forEach((_, i) => {
-        headerRow += `<th style="text-align:center;">CM Point ${i + 1}</th>`;
+        header += `<th>CM Point ${i + 1}</th>`;
       });
-      headerRow += `</tr>`;
+      header += "</tr>";
 
-      // Helper to build rows
-      function row(label, values, math=false) {
+      /* ---------- Row helper ---------- */
+      function row(label, values, math = false) {
         let r = `<tr><th>${label}</th>`;
         values.forEach(v => {
-          r += math ? `<td>$$${v}$$</td>` : `<td style="text-align:center;">${v}</td>`;
+          r += math ? `<td>$$${v}$$</td>` : `<td>${v}</td>`;
         });
-        r += `</tr>`;
+        r += "</tr>";
         return r;
       }
 
-      block.innerHTML = `
-        <table>
-          ${headerRow}
-          ${row("Class Number", cmPoints.map(() => h))}
-          ${row("CM Point $\\tau$", cmPoints.map(c => c.tau), true)}
-          ${row("$j(\\tau)$", cmPoints.map(c => c.j_value.exact), true)}
-          ${row("$\\eta(\\tau)$", cmPoints.map(c => c.eta_value.exact), true)}
-        </table>
+      table.innerHTML = `
+        ${header}
+        ${row("Class number", cmPoints.map(() => h))}
+        ${row("$\\tau$", cmPoints.map(c => c.tau), true)}
+        ${row("$j(\\tau)$", cmPoints.map(c => c.j_value.exact), true)}
+        ${row("$\\eta(\\tau)$", cmPoints.map(c => c.eta_value.exact), true)}
       `;
 
-      container.appendChild(block);
+      container.appendChild(table);
 
-      // Render MathJax
       MathJax.typesetPromise();
     })
-    .catch(error => {
+    .catch(err => {
       document.getElementById("cm-container").innerHTML =
         `<p style="color:red; text-align:center;">
           Failed to load data for discriminant ${D}.
         </p>`;
-      console.error(error);
+      console.error(err);
     });
 </script>
+
+</body>
+</html>
