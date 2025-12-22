@@ -8,7 +8,7 @@
       "tau": "i",
 
       "j_value": {
-        "exact": "\\12^3",
+        "exact": "12^3",
         "approx": "0"
       },
 
