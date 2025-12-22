@@ -1,0 +1,23 @@
+{
+  "discriminant": -8,
+  "field": "Q(sqrt(-2))",
+  "class_number": "1",
+
+  "cm_points": [
+    {
+      "tau": "\\sqrt{2}i",
+
+      "j_value": {
+        "exact": "20^3",
+        "approx": "0"
+      },
+
+      "eta_value": {
+        "exact": "\\frac{1}{2^{\\frac{11}{8}}\\pi^{\\frac{3}{4}}}\\sqrt{\\Gamma(1/8)\\Gamma(3/8)}",
+        "approx": " "
+      },
+
+      "notes": " "
+    }
+  ]
+}
