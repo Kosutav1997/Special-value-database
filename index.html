@@ -1,86 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Special Values Database</title>
+
+  <!-- MathJax -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-    }
-
-    h1, h2 {
-      text-align: center;
-    }
-
-    .intro {
-      margin-bottom: 30px;
+      margin: 40px;
       line-height: 1.6;
+      background-color: #fdfefe;
+      color: #111;
     }
 
+    /* ===== Title (blue drip) ===== */
+    h1.bloody-title {
+      color: #fff;
+      font-family: Georgia, serif;
+      font-size: 3em;
+      text-align: center;
+      text-shadow: 0 0 15px #1e90ff, 0 0 25px #104e8b, 0 0 35px #003366;
+      margin-bottom: 25px;
+    }
+
+    .drip {
+      color: #1e90ff;
+      font-weight: bold;
+      position: relative;
+      display: inline-block;
+      text-shadow: 0 0 15px #104e8b, 2px 2px 6px #003366;
+    }
+
+    .drip::after, .drip::before {
+      content: "";
+      position: absolute;
+      top: 100%;
+      border-radius: 50%;
+      opacity: 0;
+      animation: drip 4s infinite ease-in-out;
+      transform: translateX(-50%);
+    }
+
+    .drip::after {
+      left: 50%;
+      width: 6px;
+      height: 14px;
+      background: linear-gradient(to bottom, #4da6ff, #1e90ff, #003366);
+    }
+
+    .drip::before {
+      left: 40%;
+      width: 4px;
+      height: 10px;
+      background: linear-gradient(to bottom, #80c1ff, #1e90ff, #004080);
+      animation-delay: 0.6s;
+    }
+
+    @keyframes drip {
+      0% { top: 100%; opacity: 1; }
+      50% { top: 130%; opacity: 0.9; }
+      100% { top: 200%; opacity: 0; }
+    }
+
+    /* ===== Grid ===== */
     .grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 15px;
-      margin-top: 30px;
+      width: 80%;
+      margin: 30px auto;
     }
 
     .disc {
       padding: 12px;
-      background: #f2f2f2;
+      background: #e6f0ff;
       text-align: center;
       border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
+      color: #003366;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
 
     .disc:hover {
-      background: #dcdcdc;
+      background: #cce0ff;
+    }
+
+    /* ===== Citation widget ===== */
+    .cite-widget {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+    }
+
+    .cite-btn {
+      background-color: #003b8e;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 8px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .bib-box {
+      display: none;
+      margin-top: 8px;
+      width: 360px;
+      background: #f9f9f9;
+      border-left: 4px solid #003b8e;
+      padding: 12px;
+      border-radius: 6px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+      font-family: "Courier New", monospace;
+      white-space: pre-wrap;
+    }
+
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 14px;
+      color: #555;
+      border-top: 1px solid #ccc;
+      padding-top: 10px;
+    }
+
+    @media (max-width: 700px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+        width: 95%;
+      }
+      h1.bloody-title {
+        font-size: 2em;
+      }
     }
   </style>
 </head>
 
 <body>
 
-<h1>Special Values Database</h1>
-
-<div class="intro">
-  <h2>Dedekind Eta Function</h2>
-  <p>
-    The Dedekind eta function is defined for 
-    <em>τ</em> in the upper half-plane by
-  </p>
-  <p style="text-align:center;">
-    η(τ) = q<sup>1/24</sup> ∏<sub>n≥1</sub> (1 − q<sup>n</sup>),
-    &nbsp; q = e<sup>2πiτ</sup>.
-  </p>
-
-  <h2>Modular <em>j</em>-Invariant</h2>
-  <p>
-    The modular <em>j</em>-invariant is a Hauptmodul for SL₂(ℤ),
-    classifying elliptic curves over ℂ up to isomorphism.
-    At CM points, <em>j(τ)</em> is an algebraic integer generating
-    the Hilbert class field of the corresponding imaginary quadratic field.
-  </p>
+<!-- Citation -->
+<div class="cite-widget">
+  <button class="cite-btn" id="citeToggle">📋 Cite</button>
+  <div class="bib-box" id="bibBox">
+<pre id="bibPre">@misc{specialvalues2025,
+  author       = {Koustav Mondal},
+  title        = {The Special Values Database},
+  howpublished = {\url{https://koustav1997.github.io/Special-Values-Database/}},
+  year         = {2025},
+  note         = {[Online; accessed <span id="accessDate"></span>]}
+}</pre>
+  </div>
 </div>
+
+<!-- Title -->
+<h1 class="bloody-title">
+  <span class="drip">S</span>pecial
+  <span class="drip">V</span>alues
+  <span class="drip">D</span>atabase
+</h1>
+
+<!-- Introduction -->
+<h2>Introduction</h2>
+
+<p>
+This database collects special values of modular functions at CM points,
+with particular emphasis on the Dedekind eta function \( \eta(\tau) \)
+and the modular \( j \)-invariant.
+</p>
+
+<p>
+The Dedekind eta function is defined by
+\[
+\eta(\tau) = q^{1/24} \prod_{n=1}^{\infty} (1 - q^n),
+\quad q = e^{2\pi i\tau},
+\]
+and transforms as a modular form of weight \( \tfrac{1}{2} \).
+</p>
+
+<p>
+The modular invariant \( j(\tau) \) classifies elliptic curves over
+\( \mathbb{C} \) up to isomorphism. For CM points \( \tau \),
+the value \( j(\tau) \) is an algebraic integer generating the
+Hilbert class field of the corresponding imaginary quadratic order.
+</p>
 
 <h2>CM Discriminants</h2>
+<div id="disc-grid" class="grid"></div>
 
-<div class="grid">
-  <div class="disc" onclick="openDisc(-3)">D = −3</div>
-  <div class="disc" onclick="openDisc(-4)">D = −4</div>
-  <div class="disc" onclick="openDisc(-7)">D = −7</div>
-  <div class="disc" onclick="openDisc(-8)">D = −8</div>
-  <div class="disc" onclick="openDisc(-11)">D = −11</div>
-</div>
+<footer>
+  This site is under development. For correspondence, contact:
+  <a href="mailto:koustavmondal2407@gmail.com">koustavmondal2407@gmail.com</a>.
+</footer>
 
 <script>
-  function openDisc(D) {
-    window.location.href = "discriminant.html?D=" + D;
-  }
+  // Access date
+  document.getElementById("accessDate").textContent =
+    new Date().toDateString();
+
+  // Citation toggle
+  document.getElementById("citeToggle").onclick = () => {
+    const box = document.getElementById("bibBox");
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  };
+
+  // Load discriminants automatically from data/index.json
+  fetch("data/index.json")
+    .then(r => r.json())
+    .then(data => {
+      const grid = document.getElementById("disc-grid");
+      data.discriminants.forEach(D => {
+        const div = document.createElement("div");
+        div.className = "disc";
+        div.textContent = `D = ${D}`;
+        div.onclick = () => {
+          window.location.href = `discriminant.html?D=${D}`;
+        };
+        grid.appendChild(div);
+      });
+    })
+    .catch(err => {
+      console.error("Failed to load data/index.json", err);
+    });
 </script>
 
 </body>
 </html>
+
