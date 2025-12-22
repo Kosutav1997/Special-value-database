@@ -21,44 +21,78 @@
     body {
       font-family: Arial, sans-serif;
       margin: 40px;
-      background: #fdfefe;
+      background-color: #fdfefe;
+      color: #111;
+    }
+
+    a.back-link {
+      text-decoration: none;
+      color: #003366;
+      font-weight: bold;
+      padding: 6px 10px;
+      border: 1px solid #003366;
+      border-radius: 5px;
+      background: #e6f0ff;
     }
 
     h1 {
       text-align: center;
       color: #003366;
+      margin-top: 20px;
     }
 
     table {
       border-collapse: collapse;
-      margin: 30px auto;
-      min-width: 60%;
+      margin: 40px auto;
+      min-width: 70%;
     }
 
     th, td {
       border: 1px solid #ccc;
       padding: 10px 14px;
       text-align: center;
+      vertical-align: middle;
     }
 
     th {
-      background: #e6f0ff;
+      background-color: #e6f0ff;
+      font-weight: bold;
     }
 
-    .cm-block {
-      margin-bottom: 40px;
+    .warning {
+      text-align: center;
+      color: #b00020;
+      font-style: italic;
+      margin-top: 20px;
+    }
+
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 14px;
+      color: #555;
+      border-top: 1px solid #ccc;
+      padding-top: 10px;
     }
   </style>
 </head>
 
 <body>
 
+<!-- Back link -->
+<div>
+  <a href="index.html" class="back-link">← Return to main page</a>
+</div>
+
 <h1 id="title"></h1>
 
 <div id="cm-container"></div>
 
+<footer>
+  Special Values Database — CM points and modular invariants
+</footer>
+
 <script>
-  // Extract discriminant
   const params = new URLSearchParams(window.location.search);
   const D = params.get("D");
 
@@ -80,34 +114,41 @@
     })
     .then(data => {
       const container = document.getElementById("cm-container");
-      const cmPoints = data.cm_points;
-      const h = data.class_number;
+      const cmPoints = data.cm_points || [];
+
+      if (cmPoints.length === 0) {
+        container.innerHTML =
+          `<p class="warning">No CM points available.</p>`;
+        return;
+      }
 
       const table = document.createElement("table");
 
       /* ---------- Header ---------- */
-      let header = "<tr><th></th>";
+      let headerRow = `<tr><th></th>`;
       cmPoints.forEach((_, i) => {
-        header += `<th>CM Point ${i + 1}</th>`;
+        headerRow += `<th>CM Point ${i + 1}</th>`;
       });
-      header += "</tr>";
+      headerRow += `</tr>`;
 
       /* ---------- Row helper ---------- */
       function row(label, values, math = false) {
         let r = `<tr><th>${label}</th>`;
         values.forEach(v => {
-          r += math ? `<td>$$${v}$$</td>` : `<td>${v}</td>`;
+          r += math
+            ? `<td>$$${v || "\\text{--}"}$$</td>`
+            : `<td>${v || "--"}</td>`;
         });
-        r += "</tr>";
+        r += `</tr>`;
         return r;
       }
 
       table.innerHTML = `
-        ${header}
-        ${row("Class number", cmPoints.map(() => h))}
+        ${headerRow}
+        ${row("Class number", cmPoints.map(() => cmPoints.length))}
         ${row("$\\tau$", cmPoints.map(c => c.tau), true)}
-        ${row("$j(\\tau)$", cmPoints.map(c => c.j_value.exact), true)}
-        ${row("$\\eta(\\tau)$", cmPoints.map(c => c.eta_value.exact), true)}
+        ${row("$j(\\tau)$", cmPoints.map(c => c.j_value?.exact), true)}
+        ${row("$\\eta(\\tau)$", cmPoints.map(c => c.eta_value?.exact), true)}
       `;
 
       container.appendChild(table);
@@ -116,7 +157,7 @@
     })
     .catch(err => {
       document.getElementById("cm-container").innerHTML =
-        `<p style="color:red; text-align:center;">
+        `<p class="warning">
           Failed to load data for discriminant ${D}.
         </p>`;
       console.error(err);
