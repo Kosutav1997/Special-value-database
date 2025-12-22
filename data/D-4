@@ -1,0 +1,23 @@
+{
+  "discriminant": -4,
+  "field": "Q(sqrt(-1))",
+  "class_number": "1",
+
+  "cm_points": [
+    {
+      "tau": "i",
+
+      "j_value": {
+        "exact": "\\12^3",
+        "approx": "0"
+      },
+
+      "eta_value": {
+        "exact": "\\frac{\\Gamma(1/4)}{2\\pi^{\\frac{3}{4}}}",
+        "approx": " "
+      },
+
+      "notes": ""
+    }
+  ]
+}
