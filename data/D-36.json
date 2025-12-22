@@ -1,0 +1,23 @@
+{
+  "discriminant": -36,
+  "field": "Q(sqrt(-1))",
+  "class_number": "1",
+
+  "cm_points": [
+    {
+      "tau": "3i",
+
+      "j_value": {
+        "exact": "76771008+44330496\\sqrt{3}",
+        "approx": "0"
+      },
+
+      "eta_value": {
+        "exact": "\\frac{\\Gamma(1/4)}{2\\cdot 3^{\\frac{3}{8}}(2+\\sqrt{3})^{\\frac{1}{12}}\\pi^{\\frac{3}{4}}}",
+        "approx": " "
+      },
+
+      "notes": " "
+    }
+  ]
+}
