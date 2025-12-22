@@ -1,101 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>CM Discriminant</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- MathJax -->
-  <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$']]
-      },
-      svg: { fontCache: 'global' }
-    };
-  </script>
-  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #fdfefe;
-      margin: 40px;
-      color: #111;
-    }
-
-    h1 {
-      text-align: center;
-      color: #003366;
-      margin-bottom: 30px;
-    }
-
-    .cm-block {
-      width: 80%;
-      margin: 30px auto;
-      padding: 20px;
-      border-radius: 8px;
-      background: #e6f0ff;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-
-    th, td {
-      padding: 12px;
-      border: 1px solid #bbb;
-    }
-
-    th {
-      width: 35%;
-      background: #f2f6ff;
-      text-align: left;
-    }
-
-    .note {
-      margin-top: 10px;
-      font-style: italic;
-      color: #444;
-    }
-
-    .back {
-      text-align: center;
-      margin-top: 40px;
-    }
-
-    a {
-      color: #003b8e;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    @media (max-width: 700px) {
-      .cm-block {
-        width: 95%;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-<h1 id="title">CM Discriminant</h1>
-
-<div id="cm-container"></div>
-
-<div class="back">
-  <a href="index.html">← Back to Discriminants</a>
-</div>
-
 <script>
   // Extract discriminant from URL
   const params = new URLSearchParams(window.location.search);
@@ -120,45 +22,43 @@
     })
     .then(data => {
       const container = document.getElementById("cm-container");
-
-      // Class number (global)
+      const cmPoints = data.cm_points;
       const h = data.class_number;
 
-      data.cm_points.forEach((cm, idx) => {
-        const block = document.createElement("div");
-        block.className = "cm-block";
+      const block = document.createElement("div");
+      block.className = "cm-block";
 
-        block.innerHTML = `
-          <h2> </h2>
-
-          <table>
-            <tr>
-              <th>Class Number</th>
-              <td style="text-align: center;">${h}</td>
-            </tr>
-            <tr>
-              <th>CM Point $\\tau$</th>
-              <td>$$${cm.tau}$$</td>
-            </tr>
-            <tr>
-              <th>$j(\\tau)$</th>
-              <td>$$${cm.j_value.exact}$$</td>
-            </tr>
-            <tr>
-              <th>$\\eta(\\tau)$</th>
-              <td>$$${cm.eta_value.exact}$$</td>
-            </tr>
-          </table>
-
-          ${cm.notes ? `<div class="note">${cm.notes}</div>` : ""}
-        `;
-
-        container.appendChild(block);
+      // Build table header
+      let headerRow = `<tr><th></th>`;
+      cmPoints.forEach((_, i) => {
+        headerRow += `<th style="text-align:center;">CM Point ${i + 1}</th>`;
       });
+      headerRow += `</tr>`;
 
-      // Re-render MathJax
+      // Helper to build rows
+      function row(label, values, math=false) {
+        let r = `<tr><th>${label}</th>`;
+        values.forEach(v => {
+          r += math ? `<td>$$${v}$$</td>` : `<td style="text-align:center;">${v}</td>`;
+        });
+        r += `</tr>`;
+        return r;
+      }
+
+      block.innerHTML = `
+        <table>
+          ${headerRow}
+          ${row("Class Number", cmPoints.map(() => h))}
+          ${row("CM Point $\\tau$", cmPoints.map(c => c.tau), true)}
+          ${row("$j(\\tau)$", cmPoints.map(c => c.j_value.exact), true)}
+          ${row("$\\eta(\\tau)$", cmPoints.map(c => c.eta_value.exact), true)}
+        </table>
+      `;
+
+      container.appendChild(block);
+
+      // Render MathJax
       MathJax.typesetPromise();
-
     })
     .catch(error => {
       document.getElementById("cm-container").innerHTML =
@@ -168,6 +68,3 @@
       console.error(error);
     });
 </script>
-
-</body>
-</html>
