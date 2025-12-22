@@ -128,26 +128,27 @@
         const block = document.createElement("div");
         block.className = "cm-block";
 
-       
+        block.innerHTML = `
+          <h2>CM Point ${idx + 1}</h2>
 
-         <table>
-  <tr>
-    <th>Class Number</th>
-    <td style="text-align: center;">${h}</td>
-  </tr>
-  <tr>
-    <th>CM Point $\\tau$</th>
-    <td style="text-align: center;">$$${cm.tau}$$</td>
-  </tr>
-  <tr>
-    <th>$j(\\tau)$</th>
-    <td style="text-align: center;">$$${cm.j_value.exact}$$</td>
-  </tr>
-  <tr>
-    <th>$\\eta(\\tau)$</th>
-    <td style="text-align: center;">$$${cm.eta_value.exact}$$</td>
-  </tr>
-</table>
+          <table>
+            <tr>
+              <th>CM Point $\\tau$</th>
+              <td>$$${cm.tau}$$</td>
+            </tr>
+            <tr>
+              <th>$j(\\tau)$</th>
+              <td>$$${cm.j_value.exact}$$</td>
+            </tr>
+            <tr>
+              <th>$\\eta(\\tau)$</th>
+              <td>$$${cm.eta_value.exact}$$</td>
+            </tr>
+            <tr>
+              <th>Class Number</th>
+              <td>${h}</td>
+            </tr>
+          </table>
 
           ${cm.notes ? `<div class="note">${cm.notes}</div>` : ""}
         `;
