@@ -129,9 +129,13 @@
         block.className = "cm-block";
 
         block.innerHTML = `
-          <h2>CM Point ${idx + 1}</h2>
+          <h2> </h2>
 
           <table>
+             <tr>
+              <th>Class Number</th>
+              <td>${h}</td>
+            </tr>
             <tr>
               <th>CM Point $\\tau$</th>
               <td>$$${cm.tau}$$</td>
@@ -143,10 +147,6 @@
             <tr>
               <th>$\\eta(\\tau)$</th>
               <td>$$${cm.eta_value.exact}$$</td>
-            </tr>
-            <tr>
-              <th>Class Number</th>
-              <td>${h}</td>
             </tr>
           </table>
 
