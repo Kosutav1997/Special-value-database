@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Special Values Database</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      text-align: center;
+    }
+
+    .intro {
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .disc {
+      padding: 12px;
+      background: #f2f2f2;
+      text-align: center;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .disc:hover {
+      background: #dcdcdc;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Special Values Database</h1>
+
+<div class="intro">
+  <h2>Dedekind Eta Function</h2>
+  <p>
+    The Dedekind eta function is defined for 
+    <em>τ</em> in the upper half-plane by
+  </p>
+  <p style="text-align:center;">
+    η(τ) = q<sup>1/24</sup> ∏<sub>n≥1</sub> (1 − q<sup>n</sup>),
+    &nbsp; q = e<sup>2πiτ</sup>.
+  </p>
+
+  <h2>Modular <em>j</em>-Invariant</h2>
+  <p>
+    The modular <em>j</em>-invariant is a Hauptmodul for SL₂(ℤ),
+    classifying elliptic curves over ℂ up to isomorphism.
+    At CM points, <em>j(τ)</em> is an algebraic integer generating
+    the Hilbert class field of the corresponding imaginary quadratic field.
+  </p>
+</div>
+
+<h2>CM Discriminants</h2>
+
+<div class="grid">
+  <div class="disc" onclick="openDisc(-3)">D = −3</div>
+  <div class="disc" onclick="openDisc(-4)">D = −4</div>
+  <div class="disc" onclick="openDisc(-7)">D = −7</div>
+  <div class="disc" onclick="openDisc(-8)">D = −8</div>
+  <div class="disc" onclick="openDisc(-11)">D = −11</div>
+</div>
+
+<script>
+  function openDisc(D) {
+    window.location.href = "discriminant.html?D=" + D;
+  }
+</script>
+
+</body>
+</html>
