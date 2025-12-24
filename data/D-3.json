@@ -17,7 +17,7 @@
         "approx": "0.7682254223"
       },
 
-      "notes": "Unique CM point up to SL_2(Z); corresponds to the Eisenstein integers."
+      "notes": "\\text{Unique CM point up to } \\mathrm{SL}_2(\\mathbb{z}); \\text{corresponds to the Eisenstein integers.}"
     }
   ]
 }
