@@ -18,39 +18,5 @@
       },
 
       "notes": " "
-    },
-
-    {
-      "tau": "\\frac{\\sqrt{11}i}{2}",
-
-      "j_value": {
-        "exact": "34256",
-        "approx": ""
-      },
-
-      "eta_value": {
-        "exact": "  ",
-        "approx": ""
-      },
-
-      "notes": " "
-    },
-
-    {
-      "tau": "\\sqrt{11}i",
-
-      "j_value": {
-        "exact": " ",
-        "approx": " "
-      },
-
-      "eta_value": {
-        "exact": " ",
-        "approx": ""
-      },
-
-      "notes": " "
     }
-    
-  ]
 }
