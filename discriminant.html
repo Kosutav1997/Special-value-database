@@ -132,25 +132,40 @@
       headerRow += `</tr>`;
 
       /* ---------- Row helper ---------- */
-      function row(label, values, math = false) {
+      function row(label, values, math = false, left = false) {
         let r = `<tr><th>${label}</th>`;
         values.forEach(v => {
-          r += math
-            ? `<td>$$${v || "\\text{--}"}$$</td>`
-            : `<td>${v || "--"}</td>`;
+          if (!v || v.trim() === "") {
+            r += `<td>--</td>`;
+          } else if (math) {
+            r += `<td${left ? ' style="text-align:left"' : ""}>\\(${v}\\)</td>`;
+          } else {
+            r += `<td${left ? ' style="text-align:left"' : ""}>${v}</td>`;
+          }
         });
         r += `</tr>`;
         return r;
       }
 
-      table.innerHTML = `
+      /* ---------- Detect notes ---------- */
+      const hasNotes = cmPoints.some(
+        c => c.notes && c.notes.trim() !== ""
+      );
+
+      /* ---------- Build table ---------- */
+      let tableHTML = `
         ${headerRow}
-        ${row("Class number", cmPoints.map(() => cmPoints.length))}
+        ${row("Class number", cmPoints.map(() => data.class_number))}
         ${row("$\\tau$", cmPoints.map(c => c.tau), true)}
         ${row("$j(\\tau)$", cmPoints.map(c => c.j_value?.exact), true)}
         ${row("$\\eta(\\tau)$", cmPoints.map(c => c.eta_value?.exact), true)}
       `;
 
+      if (hasNotes) {
+        tableHTML += row("Notes", cmPoints.map(c => c.notes), true, true);
+      }
+
+      table.innerHTML = tableHTML;
       container.appendChild(table);
 
       MathJax.typesetPromise();
