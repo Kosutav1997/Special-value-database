@@ -1,0 +1,39 @@
+{
+  "discriminant": -40,
+  "field": "Q(sqrt(-6))",
+  "class_number": 2,
+
+  "cm_points": [
+    {
+      "tau": "\\sqrt{10}i",
+
+      "j_value": {
+        "exact": " 1728 (1399 + 988 \\sqrt{2})",
+        "approx": ""
+      },
+
+      "eta_value": {
+        "exact": "  A// B",
+        "approx": ""
+      },
+
+      "notes": " "
+    },
+
+    {
+      "tau": "\\frac{\\sqrt{10}i}{2}",
+
+      "j_value": {
+        "exact": "1728 (1399 - 988 \\sqrt{2})",
+        "approx": " "
+      },
+
+      "eta_value": {
+        "exact": " \\frac{2^{\\frac{1}{4}}\\eta(\\sqrt{10}i)}{(161-72\\sqrt{5})^{\\frac{1}{24}}} ",
+        "approx": ""
+      },
+
+      "notes": " "
+    }
+  ]
+}
