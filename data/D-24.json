@@ -24,7 +24,7 @@
       "tau": "\\frac{\\sqrt{6}i}{2}",
 
       "j_value": {
-        "exact": "1728 (1399 - 988 \sqrt{2})",
+        "exact": "1728 (1399 - 988 \\sqrt{2})",
         "approx": " "
       },
 
