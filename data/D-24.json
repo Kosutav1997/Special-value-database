@@ -13,7 +13,7 @@
       },
 
       "eta_value": {
-        "exact": " \\frac{(\\sqrt{2}-1)^{\\frac{1}{12}}}{2^{\\frac{3}{2}}3^{\\frac{1}{4}}\\pi^{\\frac{3}{4}}}\cdot \\left(\Gamma(1/24)\\Gamma(5/24)\\Gamma(7/24)\\Gamma(11/24)\\right)^{\\frac{1}{4}} ",
+        "exact": " \\frac{(\\sqrt{2}-1)^{\\frac{1}{12}}}{2^{\\frac{3}{2}}3^{\\frac{1}{4}}\\pi^{\\frac{3}{4}}}\\cdot \\left(\\Gamma(1/24)\\Gamma(5/24)\\Gamma(7/24)\\Gamma(11/24)\\right)^{\\frac{1}{4}} ",
         "approx": ""
       },
 
