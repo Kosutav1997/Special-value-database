@@ -13,11 +13,11 @@
       },
 
       "eta_value": {
-        "exact": "  A// B",
+        "exact": " \\frac{ (\\Gamma(1/40)\\Gamma(7/40)\\Gamma(9/40)\\Gamma(11/40)\\Gamma(13/40)\\Gamma(19/40)\\Gamma(23/40)\\Gamma(37/40)  )^{\\frac{1}{4}}}{  4\\pi^{\\frac{5}{4}} (5\\phi)^{\\frac{1}{4}}    } ",
         "approx": ""
       },
 
-      "notes": " "
+      "notes": "\\phi=\\frac{1+\\sqrt{5}}{2} is the golden ratio. "
     },
 
     {
