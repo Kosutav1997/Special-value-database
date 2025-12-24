@@ -1,0 +1,23 @@
+{
+  "discriminant": -28,
+  "field": "Q(sqrt(-7))",
+  "class_number": "1",
+
+  "cm_points": [
+    {
+      "tau": "\\sqrt{7}i",
+
+      "j_value": {
+        "exact": "16581375 ",
+        "approx": "0"
+      },
+
+      "eta_value": {
+        "exact": "\\frac{1}{2^{\\frac{3}{2}}7^{\\frac{1}{8}}\\pi} \\sqrt{\\Gamma(1/7)\\Gamma(2/7)\\Gamma(4/7)}",
+        "approx": " "
+      },
+
+      "notes": " "
+    }
+  ]
+}
