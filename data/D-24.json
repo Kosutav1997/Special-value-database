@@ -1,0 +1,39 @@
+{
+  "discriminant": -24,
+  "field": "Q(sqrt(-6))",
+  "class_number": 2,
+
+  "cm_points": [
+    {
+      "tau": "\\sqrt{6}i",
+
+      "j_value": {
+        "exact": " 1728 (1399 + 988 \\sqrt{2})",
+        "approx": ""
+      },
+
+      "eta_value": {
+        "exact": " \\frac{(\\sqrt{2}-1)^{\\frac{1}{12}}}{2^{\\frac{3}{2}}3^{\\frac{1}{4}}\\pi^{\\frac{3}{4}}}\cdot \\left(\Gamma(1/24)\\Gamma(5/24)\\Gamma(7/24)\\Gamma(11/24)\\right)^{\\frac{1}{4}} ",
+        "approx": ""
+      },
+
+      "notes": " "
+    },
+
+    {
+      "tau": "\\frac{\\sqrt{6}i}{2}",
+
+      "j_value": {
+        "exact": "1728 (1399 - 988 \sqrt{2})",
+        "approx": " "
+      },
+
+      "eta_value": {
+        "exact": " \\frac{2^{\\frac{1}{4}}\\eta(\\sqrt{6}i)}{(17-12\\sqrt{2})^{\\frac{1}{24}}} ",
+        "approx": ""
+      },
+
+      "notes": " "
+    }
+  ]
+}
