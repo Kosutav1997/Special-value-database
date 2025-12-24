@@ -1,183 +1,162 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>CM Discriminant</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+<meta charset="UTF-8" /> 
+<title>CM Discriminant</title> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
 
-  <!-- MathJax -->
-  <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['\\[', '\\]']]
-      },
-      svg: { fontCache: 'global' }
-    };
-  </script>
-  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<!-- MathJax --> 
+<script> 
+window.MathJax = { 
+  tex: { 
+    inlineMath: [['$', '$'], ['\\(', '\\)']], 
+    displayMath: [['$$', '$$'], ['\\[', '\\]']] 
+  }, 
+  svg: { fontCache: 'global' } 
+}; 
+</script> 
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script> 
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-      background-color: #fdfefe;
-      color: #111;
-    }
+<style> 
+body { 
+  font-family: Arial, sans-serif; 
+  margin: 40px; 
+  background-color: #fdfefe; 
+  color: #111; 
+} 
+a.back-link { 
+  text-decoration: none; 
+  color: #003366; 
+  font-weight: bold; 
+  padding: 6px 10px; 
+  border: 1px solid #003366; 
+  border-radius: 5px; 
+  background: #e6f0ff; 
+} 
+h1 { 
+  text-align: center; 
+  color: #003366; 
+  margin-top: 20px; 
+} 
+table { 
+  border-collapse: collapse; 
+  margin: 40px auto; 
+  min-width: 70%; 
+} 
+th, td { 
+  border: 1px solid #ccc; 
+  padding: 10px 14px; 
+  text-align: center; 
+  vertical-align: middle; 
+} 
+th { 
+  background-color: #e6f0ff; 
+  font-weight: bold; 
+} 
+.warning { 
+  text-align: center; 
+  color: #b00020; 
+  font-style: italic; 
+  margin-top: 20px; 
+} 
+footer { 
+  margin-top: 50px; 
+  text-align: center; 
+  font-size: 14px; 
+  color: #555; 
+  border-top: 1px solid #ccc; 
+  padding-top: 10px; 
+} 
+</style> 
+</head> 
 
-    a.back-link {
-      text-decoration: none;
-      color: #003366;
-      font-weight: bold;
-      padding: 6px 10px;
-      border: 1px solid #003366;
-      border-radius: 5px;
-      background: #e6f0ff;
-    }
+<body> 
 
-    h1 {
-      text-align: center;
-      color: #003366;
-      margin-top: 20px;
-    }
+<!-- Back link --> 
+<div> 
+  <a href="index.html" class="back-link">← Return to main page</a> 
+</div> 
 
-    table {
-      border-collapse: collapse;
-      margin: 40px auto;
-      min-width: 70%;
-    }
+<h1 id="title"></h1> 
+<div id="cm-container"></div> 
 
-    th, td {
-      border: 1px solid #ccc;
-      padding: 10px 14px;
-      text-align: center;
-      vertical-align: middle;
-    }
+<footer> 
+Special Values Database — CM points and modular invariants 
+</footer> 
 
-    th {
-      background-color: #e6f0ff;
-      font-weight: bold;
-    }
+<script> 
+const params = new URLSearchParams(window.location.search); 
+const D = params.get("D"); 
 
-    .warning {
-      text-align: center;
-      color: #b00020;
-      font-style: italic;
-      margin-top: 20px;
-    }
+if (!D) { 
+  document.getElementById("title").textContent = 
+    "No discriminant specified."; 
+  throw new Error("Missing discriminant parameter."); 
+} 
 
-    footer {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 14px;
-      color: #555;
-      border-top: 1px solid #ccc;
-      padding-top: 10px;
-    }
-  </style>
-</head>
+document.getElementById("title").textContent = 
+  `CM Discriminant D = ${D}`; 
 
-<body>
+fetch(`data/D${D}.json`) 
+  .then(response => { 
+    if (!response.ok) { 
+      throw new Error("JSON file not found"); 
+    } 
+    return response.json(); 
+  }) 
+  .then(data => { 
+    const container = document.getElementById("cm-container"); 
+    const cmPoints = data.cm_points || []; 
 
-<!-- Back link -->
-<div>
-  <a href="index.html" class="back-link">← Return to main page</a>
-</div>
+    if (cmPoints.length === 0) { 
+      container.innerHTML = 
+        `<p class="warning">No CM points available.</p>`; 
+      return; 
+    } 
 
-<h1 id="title"></h1>
+    const table = document.createElement("table"); 
 
-<div id="cm-container"></div>
+    /* ---------- Header ---------- */ 
+    let headerRow = `<tr><th></th>`; 
+    cmPoints.forEach((_, i) => { 
+      headerRow += `<th>CM Point ${i + 1}</th>`; 
+    }); 
+    headerRow += `</tr>`; 
 
-<footer>
-  Special Values Database — CM points and modular invariants
-</footer>
+    /* ---------- Row helper ---------- */ 
+    function row(label, values, math = false) { 
+      let r = `<tr><th>${label}</th>`; 
+      values.forEach(v => { 
+        r += math 
+          ? `<td>$$${v || "\\text{--}"}$$</td>` 
+          : `<td>${v || "--"}</td>`; 
+      }); 
+      r += `</tr>`; 
+      return r; 
+    } 
 
-<script>
-  const params = new URLSearchParams(window.location.search);
-  const D = params.get("D");
+    table.innerHTML = `
+      ${headerRow}
+      ${row("Class number", cmPoints.map(() => cmPoints.length))}
+      ${row("$\\tau$", cmPoints.map(c => c.tau), true)}
+      ${row("$j(\\tau)$", cmPoints.map(c => c.j_value?.exact), true)}
+      ${row("$\\eta(\\tau)$", cmPoints.map(c => c.eta_value?.exact), true)}
 
-  if (!D) {
-    document.getElementById("title").textContent =
-      "No discriminant specified.";
-    throw new Error("Missing discriminant parameter.");
-  }
+      <!-- ✅ ADDED NOTES ROW (ONLY ADDITION) -->
+      ${row("Notes", cmPoints.map(c => c.notes), true)}
+    `; 
 
-  document.getElementById("title").textContent =
-    `CM Discriminant D = ${D}`;
+    container.appendChild(table); 
+    MathJax.typesetPromise(); 
+  }) 
+  .catch(err => { 
+    document.getElementById("cm-container").innerHTML = 
+      `<p class="warning">
+        Failed to load data for discriminant ${D}.
+      </p>`; 
+    console.error(err); 
+  }); 
+</script> 
 
-  fetch(`data/D${D}.json`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("JSON file not found");
-      }
-      return response.json();
-    })
-    .then(data => {
-      const container = document.getElementById("cm-container");
-      const cmPoints = data.cm_points || [];
-
-      if (cmPoints.length === 0) {
-        container.innerHTML =
-          `<p class="warning">No CM points available.</p>`;
-        return;
-      }
-
-      const table = document.createElement("table");
-
-      /* ---------- Header ---------- */
-      let headerRow = `<tr><th></th>`;
-      cmPoints.forEach((_, i) => {
-        headerRow += `<th>CM Point ${i + 1}</th>`;
-      });
-      headerRow += `</tr>`;
-
-      /* ---------- Row helper ---------- */
-      function row(label, values, math = false, left = false) {
-        let r = `<tr><th>${label}</th>`;
-        values.forEach(v => {
-          if (!v || v.trim() === "") {
-            r += `<td>--</td>`;
-          } else if (math) {
-            r += `<td${left ? ' style="text-align:left"' : ""}>\\(${v}\\)</td>`;
-          } else {
-            r += `<td${left ? ' style="text-align:left"' : ""}>${v}</td>`;
-          }
-        });
-        r += `</tr>`;
-        return r;
-      }
-
-      /* ---------- Detect notes ---------- */
-      const hasNotes = cmPoints.some(
-        c => c.notes && c.notes.trim() !== ""
-      );
-
-      /* ---------- Build table ---------- */
-      let tableHTML = `
-        ${headerRow}
-        ${row("Class number", cmPoints.map(() => data.class_number))}
-        ${row("$\\tau$", cmPoints.map(c => c.tau), true)}
-        ${row("$j(\\tau)$", cmPoints.map(c => c.j_value?.exact), true)}
-        ${row("$\\eta(\\tau)$", cmPoints.map(c => c.eta_value?.exact), true)}
-      `;
-
-      if (hasNotes) {
-        tableHTML += row("Notes", cmPoints.map(c => c.notes), true, true);
-      }
-
-      table.innerHTML = tableHTML;
-      container.appendChild(table);
-
-      MathJax.typesetPromise();
-    })
-    .catch(err => {
-      document.getElementById("cm-container").innerHTML =
-        `<p class="warning">
-          Failed to load data for discriminant ${D}.
-        </p>`;
-      console.error(err);
-    });
-</script>
-
-</body>
+</body> 
 </html>
