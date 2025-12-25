@@ -1,0 +1,23 @@
+{
+  "discriminant": -67,
+  "field": "Q(sqrt(-67))",
+  "class_number": "1",
+
+  "cm_points": [
+    {
+      "tau": "\\frac{1+\\sqrt{67}i}{2}",
+
+      "j_value": {
+        "exact": "-5280^3",
+        "approx": ""
+      },
+
+      "eta_value": {
+        "exact": "   ",
+        "approx": ""
+      },
+
+      "notes": " "
+    }
+  ]
+}
