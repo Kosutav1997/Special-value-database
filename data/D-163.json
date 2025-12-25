@@ -1,0 +1,23 @@
+{
+  "discriminant": -163,
+  "field": "Q(sqrt(-163))",
+  "class_number": "1",
+
+  "cm_points": [
+    {
+      "tau": "\\frac{1+\\sqrt{163}i}{2}",
+
+      "j_value": {
+        "exact": "-640320^3",
+        "approx": ""
+      },
+
+      "eta_value": {
+        "exact": "   ",
+        "approx": ""
+      },
+
+      "notes": " "
+    }
+  ]
+}
