@@ -1,0 +1,39 @@
+{
+  "discriminant": -15,
+  "field": "Q(sqrt(-15))",
+  "class_number": 2,
+
+  "cm_points": [
+    {
+      "tau": "\\frac{1+\\sqrt{15}i}{2}",
+
+      "j_value": {
+        "exact": " \\frac{135}{2}(-1415 - 637 \\sqrt{5}) ",
+        "approx": ""
+      },
+
+      "eta_value": {
+        "exact": "  \\frac{e^{\\pi i/24} (47+21\\sqrt{5})^(1/24)}{2^{19/24}3^{1/4}5^{1/4}\\pi^{3/4}}\\left(\\frac{\\sqrt{5}-1}{2}\\right)^{5/12} (\\Gamma(1/15)\\Gamma(2/15)\\Gamma(4/15)\\Gamma(8/15))^{1/4}",
+        "approx": ""
+      },
+
+      "notes": " "
+    },
+
+    {
+      "tau": "\\frac{1+\\sqrt{5}i}{2}",
+
+      "j_value": {
+        "exact": "\\frac{135}{2}(-1415 + 637 \\sqrt{5})",
+        "approx": " "
+      },
+
+      "eta_value": {
+        "exact": "   ",
+        "approx": ""
+      },
+
+      "notes": " "
+    }
+  ]
+}
