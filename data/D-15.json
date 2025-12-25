@@ -21,7 +21,7 @@
     },
 
     {
-      "tau": "\\frac{1+\\sqrt{5}i}{2}",
+      "tau": "\\frac{1+\\sqrt{15}i}{4}",
 
       "j_value": {
         "exact": "\\frac{135}{2}(-1415 + 637 \\sqrt{5})",
