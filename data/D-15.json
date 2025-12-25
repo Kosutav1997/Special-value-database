@@ -13,7 +13,7 @@
       },
 
       "eta_value": {
-        "exact": "  \\frac{e^{\\pi i/24} (47+21\\sqrt{5})^(1/24)}{2^{19/24}3^{1/4}5^{1/4}\\pi^{3/4}}\\left(\\frac{\\sqrt{5}-1}{2}\\right)^{5/12} (\\Gamma(1/15)\\Gamma(2/15)\\Gamma(4/15)\\Gamma(8/15))^{1/4}",
+        "exact": "  \\frac{e^{\\pi i/24} (47+21\\sqrt{5})^(1/24)}{2^{19/24}3^{1/4}5^{1/4}\\pi^{3/4}}\\left(\\frac{\\sqrt{5}-1}{2}\\right)^{5/12} \\newline (\\Gamma(1/15)\\Gamma(2/15)\\Gamma(4/15)\\Gamma(8/15))^{1/4}",
         "approx": ""
       },
 
