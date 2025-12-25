@@ -1,0 +1,39 @@
+{
+  "discriminant": -24,
+  "field": "Q(sqrt(-6))",
+  "class_number": 2,
+
+  "cm_points": [
+    {
+      "tau": "\\sqrt{5}i",
+
+      "j_value": {
+        "exact": " 320 (1975 + 884 \\sqrt{5})",
+        "approx": ""
+      },
+
+      "eta_value": {
+        "exact": "  \\frac{ (\\Gamma(1/20)\\Gamma(3/20)\\Gamma(7/20)\\Gamma(9/20))^{1/4} }{2^{5/4}5^{1/4}\\phi^{1/8}\\pi^{3/4}} ",
+        "approx": ""
+      },
+
+      "notes": " "
+    },
+
+    {
+      "tau": "\\frac{\\sqrt{5}i}{2}",
+
+      "j_value": {
+        "exact": "320 (1975 - 884 \\sqrt{5})",
+        "approx": " "
+      },
+
+      "eta_value": {
+        "exact": " ",
+        "approx": ""
+      },
+
+      "notes": " "
+    }
+  ]
+}
